@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markdown Word 实用指南</title>
+<style>
+:root{
+  --bg:#f5f7fb; --paper:#fff; --text:#1f2937; --muted:#667085; --line:#e4e7ec;
+  --accent:#315efb; --accent2:#6f4cff; --soft:#eef3ff; --green:#07865f; --greenbg:#edfdf6;
+  --yellow:#9a6700; --yellowbg:#fff8df; --red:#b42318; --redbg:#fff1f0; --code:#111827;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 10% -10%,rgba(49,94,251,.12),transparent 28%),
+    linear-gradient(180deg,#fbfcff 0,var(--bg) 420px);
+  font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.75;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:260px minmax(0,900px);gap:36px;width:min(1220px,94vw);margin:auto}
+aside{
+  position:sticky;top:18px;height:calc(100vh - 36px);align-self:start;
+  padding:22px 18px;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 36px rgba(31,41,55,.05);
+  overflow:auto;
+}
+.brand{font-size:19px;font-weight:800;margin-bottom:2px}
+.ver{font-size:12px;color:var(--muted);margin-bottom:18px}
+.toc a{
+  display:block;padding:7px 9px;margin:2px 0;border-radius:8px;color:#475467;font-size:14px
+}
+.toc a:hover{background:var(--soft);color:var(--accent);text-decoration:none}
+main{padding:54px 0 90px}
+.hero{
+  padding:44px 46px;background:linear-gradient(135deg,#121a31,#172a64 58%,#315efb);
+  color:#fff;border-radius:26px;box-shadow:0 22px 60px rgba(31,41,55,.14);margin-bottom:28px
+}
+.hero .pill{display:inline-block;padding:5px 9px;border:1px solid rgba(255,255,255,.3);border-radius:999px;font-size:13px;color:#dce5ff}
+.hero h1{font-size:46px;line-height:1.08;letter-spacing:-.035em;margin:18px 0 12px}
+.hero p{max-width:720px;color:#dbe3f7;font-size:18px;margin:0}
+.quick{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 0
+}
+.quick div{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12)}
+.quick b{display:block;font-size:20px}.quick small{color:#cbd5e9}
+section{
+  background:var(--paper);border:1px solid var(--line);border-radius:20px;
+  padding:32px 36px;margin:22px 0;box-shadow:0 8px 30px rgba(31,41,55,.035)
+}
+h2{font-size:30px;letter-spacing:-.02em;margin:0 0 10px}
+h3{font-size:20px;margin:28px 0 8px}
+h4{font-size:16px;margin:22px 0 6px}
+p{margin:8px 0 14px}
+.muted{color:var(--muted)}
+.steps{counter-reset:step;display:grid;gap:14px;margin:20px 0}
+.step{
+  position:relative;padding:18px 18px 18px 62px;border:1px solid var(--line);border-radius:14px;background:#fcfcfd
+}
+.step:before{
+  counter-increment:step;content:counter(step);position:absolute;left:18px;top:18px;width:28px;height:28px;
+  display:grid;place-items:center;border-radius:9px;background:var(--accent);color:white;font-weight:800
+}
+.step b{display:block;margin-bottom:4px}
+.code,code{
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace
+}
+code{background:#f2f4f7;padding:.12em .35em;border-radius:5px;font-size:.92em}
+pre{
+  margin:12px 0 18px;padding:16px 18px;border-radius:12px;background:var(--code);color:#e5e7eb;overflow:auto;
+  border:1px solid #273244;line-height:1.55
+}
+.callout{padding:14px 16px;border-radius:12px;margin:16px 0;border-left:4px solid var(--accent);background:var(--soft)}
+.ok{background:var(--greenbg);border-left-color:var(--green)}
+.warn{background:var(--yellowbg);border-left-color:#f0b429}
+.danger{background:var(--redbg);border-left-color:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+.card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fcfcfd}
+.card h3,.card h4{margin-top:0}
+.kbd{
+  display:inline-block;padding:1px 7px;min-width:24px;text-align:center;border:1px solid #cfd4dc;
+  border-bottom-width:2px;border-radius:6px;background:#fff;font:12px/22px "SFMono-Regular",Consolas,monospace;color:#344054
+}
+table{width:100%;border-collapse:collapse;margin:14px 0 4px}
+th,td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}
+th{font-size:13px;color:#475467;background:#f8f9fb}
+tr:last-child td{border-bottom:0}
+.path{
+  display:block;padding:13px 15px;border:1px dashed #b9c2d0;border-radius:10px;background:#f8fafc;
+  font-family:"SFMono-Regular",Consolas,monospace;font-size:13px;overflow:auto
+}
+.tag{display:inline-block;margin:2px 4px 2px 0;padding:3px 8px;border-radius:999px;background:#f2f4f7;color:#475467;font-size:12px}
+.checklist{list-style:none;padding:0}
+.checklist li{position:relative;padding-left:26px;margin:7px 0}
+.checklist li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
+footer{padding:28px 4px 10px;color:#7b8494;font-size:13px;text-align:center}
+@media(max-width:900px){
+  .layout{display:block;width:min(94vw,900px)}
+  aside{position:relative;top:auto;height:auto;margin-top:18px}
+  main{padding-top:24px}
+  .quick,.grid{grid-template-columns:1fr}
+}
+@media print{
+  body{background:white}
+  aside{display:none}
+  .layout{display:block;width:auto}
+  main{padding:0}
+  section,.hero{box-shadow:none;break-inside:avoid}
+  .hero{background:#182447!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<aside>
+  <div class="brand">Markdown Word</div>
+  <div class="ver">实用指南 · 适用于 0.9.x</div>
+  <nav class="toc">
+    <a href="#start">3 分钟快速开始</a>
+    <a href="#install">完整安装教程</a>
+    <a href="#update">更新插件</a>
+    <a href="#open">如何进入页面模式</a>
+    <a href="#writing">正文与 Markdown</a>
+    <a href="#formula">公式</a>
+    <a href="#table">表格</a>
+    <a href="#image">图片</a>
+    <a href="#textbox">文本框</a>
+    <a href="#shape">箭头与方框</a>
+    <a href="#multi">多选与图层</a>
+    <a href="#pages">页面与尺寸</a>
+    <a href="#shortcut">快捷键</a>
+    <a href="#export">导出</a>
+    <a href="#workflow">推荐工作流</a>
+    <a href="#trouble">常见问题</a>
+    <a href="#backup">备份建议</a>
+  </nav>
+</aside>
+
+<main>
+  <div class="hero">
+    <span class="pill">Obsidian 插件 · Su &amp; ChatGPT</span>
+    <h1>Markdown Word 实用指南</h1>
+    <p>从“下载 ZIP 放到 plugins 文件夹”开始，到公式、表格、图片、文本框、图形、多选、分页和导出，一份可以直接照着操作的说明书。</p>
+    <div class="quick">
+      <div><b>1</b><small>解压到 Vault/.obsidian/plugins</small></div>
+      <div><b>2</b><small>在 Obsidian 中启用插件</small></div>
+      <div><b>3</b><small>打开任意 .md，进入 Markdown Word</small></div>
+    </div>
+  </div>
+
+  <section id="start">
+    <h2>3 分钟快速开始</h2>
+    <div class="steps">
+      <div class="step"><b>下载插件压缩包</b>例如 <code>markdown-word-0.9.3.zip</code>。不要直接把 ZIP 丢进插件目录，要先解压。</div>
+      <div class="step"><b>找到你的 Obsidian Vault</b>打开这个知识库所在的真实文件夹，进入隐藏目录 <code>.obsidian/plugins/</code>。</div>
+      <div class="step"><b>放入插件文件夹</b>最终路径应该是 <code>.obsidian/plugins/markdown-word/</code>，里面直接能看到 <code>main.js</code>、<code>manifest.json</code>、<code>styles.css</code>。</div>
+      <div class="step"><b>重启 Obsidian 并启用</b>进入 设置 → 第三方插件 / Community plugins → 找到 Markdown Word → 开启。</div>
+      <div class="step"><b>打开一篇 Markdown 笔记</b>通过命令面板、左侧按钮或文件菜单打开 Markdown Word 页面模式。</div>
+    </div>
+    <div class="callout ok"><b>判断是否安装正确：</b>Obsidian 插件列表中能看到 “Markdown Word”，并显示作者 <b>Su &amp; ChatGPT</b>；打开页面模式后顶部出现格式工具栏，正文显示在分页纸张上。</div>
+  </section>
+
+  <section id="install">
+    <h2>完整安装教程</h2>
+    <h3>1. 下载并解压 ZIP</h3>
+    <p>下载类似下面这样的压缩包：</p>
+    <pre>markdown-word-0.9.3.zip</pre>
+    <p>解压以后应得到一个名为 <code>markdown-word</code> 的文件夹。最重要的是确认不要多套一层目录。</p>
+
+    <h3>2. 找到 Vault 的插件目录</h3>
+    <p>Obsidian 的插件是<strong>按知识库（Vault）安装</strong>的。假设你的知识库叫“日记”，目录结构大致如下：</p>
+    <pre>日记/
+├─ .obsidian/
+│  ├─ plugins/
+│  │  └─ markdown-word/
+│  │     ├─ main.js
+│  │     ├─ manifest.json
+│  │     ├─ styles.css
+│  │     └─ README.md
+├─ 笔记1.md
+└─ ...</pre>
+
+    <div class="callout warn"><b>Windows 用户：</b><code>.obsidian</code> 可能是隐藏文件夹。资源管理器 → 查看 → 显示 → 隐藏的项目。macOS 可在 Finder 中按 <span class="kbd">⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">.</span> 显示隐藏文件。</div>
+
+    <h3>3. 正确的最终路径</h3>
+    <span class="path">你的 Vault/.obsidian/plugins/markdown-word/main.js</span>
+    <p>如果变成了下面这样，就多嵌套了一层：</p>
+    <span class="path">❌ .obsidian/plugins/markdown-word/markdown-word/main.js</span>
+
+    <h3>4. 在 Obsidian 中启用</h3>
+    <ol>
+      <li>完全关闭并重新打开 Obsidian。</li>
+      <li>设置 → 第三方插件 / Community plugins。</li>
+      <li>如果处于 Restricted Mode / 安全模式，先允许第三方插件。</li>
+      <li>找到 <b>Markdown Word</b>。</li>
+      <li>打开右侧开关。</li>
+    </ol>
+  </section>
+
+  <section id="update">
+    <h2>更新插件</h2>
+    <p>手动安装版本最稳妥的更新方式是<strong>整文件夹替换</strong>：</p>
+    <div class="steps">
+      <div class="step"><b>关闭 Obsidian</b>避免旧的 <code>main.js</code> 正在被占用。</div>
+      <div class="step"><b>备份旧目录</b>可将 <code>markdown-word</code> 临时改名为 <code>markdown-word-backup</code>。</div>
+      <div class="step"><b>删除旧目录并放入新版</b>不要只覆盖某一个文件，避免新旧代码混杂。</div>
+      <div class="step"><b>重新打开 Obsidian</b>到插件列表确认版本号已变化。</div>
+    </div>
+    <div class="callout"><b>你的笔记不会存在插件目录里。</b>正文仍是 Vault 中的 <code>.md</code>，页面布局通常保存在对应的布局数据文件中，所以替换插件程序本身不会删除正文。</div>
+  </section>
+
+  <section id="open">
+    <h2>如何进入 Markdown Word</h2>
+    <p>先打开一篇普通 <code>.md</code> 笔记，再通过以下任一入口进入页面模式：</p>
+    <ul>
+      <li>命令面板搜索 <b>Open current note in page mode</b> / Markdown Word。</li>
+      <li>点击插件提供的 Ribbon / 左侧按钮。</li>
+      <li>在文件菜单中选择用 Markdown Word 打开。</li>
+    </ul>
+    <p>插件会尽量复用已经打开的 Markdown Word 标签页，避免同一文件反复产生重复标签。</p>
+  </section>
+
+  <section id="writing">
+    <h2>正文：像 Markdown 一样写，像文档一样看</h2>
+    <p>Markdown Word 的正文仍以 Markdown 为底层。平时看到的是渲染后的页面；进入某一段编辑时，会编辑该段 Markdown 源码，离开后重新显示最终效果。</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>标题</h3>
+        <pre># 一级标题
+## 二级标题
+### 三级标题</pre>
+      </div>
+      <div class="card">
+        <h3>强调</h3>
+        <pre>**粗体**
+*斜体*
+~~删除线~~
+`行内代码`</pre>
+      </div>
+    </div>
+
+    <h3>在任意位置插入新行</h3>
+    <p>把鼠标移到正文左侧边缘，会出现跟随当前行/块位置的 <b>+</b>。点击即可在对应位置插入新的 Markdown 段落。</p>
+    <div class="callout">这适合已经排好一页之后，在中间补充解释，而不需要跑回原始 Markdown 文件找位置。</div>
+  </section>
+
+  <section id="formula">
+    <h2>公式</h2>
+    <h3>行内公式</h3>
+    <pre>速度满足 $v = \frac{dx}{dt}$，因此……</pre>
+    <h3>块公式</h3>
+    <pre>$$
+\int_a^b f(x)\,dx
+$$</pre>
+    <p>常见 LaTeX 写法都可以继续使用，例如 <code>\frac</code>、<code>\sqrt</code>、上下标、希腊字母、求和、积分、矩阵等。</p>
+
+    <div class="callout ok"><b>Office 导出：</b>常见公式会尽量转换成 Word / PowerPoint 的原生 Office Math（OMML），因此在支持的 Office 中可以继续编辑。非常复杂或不支持的 LaTeX 会使用高质量 fallback，避免整份文件导出失败。</div>
+    <div class="callout warn"><b>PDF：</b>普通文字保持可选择、可复制；公式目前更重视视觉保真，因此公式自身可能以高分辨率渲染形式嵌入。</div>
+  </section>
+
+  <section id="table">
+    <h2>表格</h2>
+    <p>可以从顶部工具栏插入表格。页面中的表格支持直接编辑单元格，并提供类似 Obsidian 的扩展按钮：</p>
+    <ul>
+      <li>表格右侧 <b>+</b>：增加一列。</li>
+      <li>表格底部 <b>+</b>：增加一行。</li>
+      <li>表头列边缘的 <b>+</b>：从中间插入新列。</li>
+      <li>直接点击单元格文字即可修改。</li>
+    </ul>
+    <pre>| 列 1 | 列 2 |
+| --- | --- |
+| 内容 A | 内容 B |</pre>
+    <p>PPTX / DOCX 导出时，表格会尽量生成<strong>原生 Office 表格</strong>，而不是整块截图。</p>
+  </section>
+
+  <section id="image">
+    <h2>图片</h2>
+    <p>图片是独立浮动对象，可以像 PPT 一样移动和调整大小。</p>
+    <h3>添加图片</h3>
+    <ul>
+      <li>点击顶部 <b>+ 图片</b>，选择 Vault 中已有图片。</li>
+      <li>也可以在支持的场景中直接复制 / 粘贴图片。</li>
+    </ul>
+    <p>引用 Vault 已有图片时，插件尽量只记录引用和布局，不为了排版额外复制一份图片文件。</p>
+
+    <h3>图片常用操作</h3>
+    <p>单击图片选中；右键可打开操作菜单：</p>
+    <span class="tag">复制</span><span class="tag">剪切</span><span class="tag">置于顶层</span><span class="tag">置于底层</span><span class="tag">删除</span>
+    <p>选中后还可以直接按 <span class="kbd">Delete</span> / <span class="kbd">Backspace</span> 删除。</p>
+  </section>
+
+  <section id="textbox">
+    <h2>文本框</h2>
+    <p>文本框是一种独立图层，适合旁注、重点说明、图旁解释、补充结论。</p>
+    <ul>
+      <li><b>单击：</b>选中 / 拖动文本框。</li>
+      <li><b>双击：</b>进入文本编辑。</li>
+      <li>文本框内部同样可以使用 Markdown 和顶部格式工具。</li>
+      <li><b>右键：</b>复制、剪切、置顶、置底、删除。</li>
+    </ul>
+    <div class="callout">如果你要移动文本框，直接单击后拖；如果你要改字，双击。这能避免“想拖动却突然出现光标”。</div>
+  </section>
+
+  <section id="shape">
+    <h2>箭头与方框</h2>
+    <h3>箭头</h3>
+    <p>点击 <b>→ 箭头</b> 后，在页面上按住起点，拖到终点，松手生成。选中后可以继续拖动两端控制点。</p>
+    <h3>方框</h3>
+    <p>点击 <b>□ 方框</b> 后，从一个角拖到另一个角。选中后可以通过控制点调整宽高。</p>
+    <p>图形支持颜色、线宽、层级、复制、跨页、锁定等操作。</p>
+    <div class="callout"><b>连续绘制：</b>双击绘图工具可保持绘图状态；按 <span class="kbd">Esc</span> 退出绘图模式。</div>
+  </section>
+
+  <section id="multi">
+    <h2>多选、框选与图层</h2>
+    <h3>Shift 多选</h3>
+    <p>按住 <span class="kbd">Shift</span>，依次点击图片、文本框、方框、箭头，可以加入或移出当前选择。</p>
+    <h3>框选</h3>
+    <p>在页面空白区域按住鼠标拖出矩形框，可一次选择多个浮动对象。</p>
+    <h3>整组拖动</h3>
+    <p>多选后，拖动其中任意一个已选对象，<strong>同一页内的整组选中对象会一起移动</strong>。</p>
+    <p>目前整组拖动以同页对象为主，避免不同页面坐标系造成不可预测的跨页移动。</p>
+    <h3>点击空白处</h3>
+    <p>点击页面空白区域可清除当前对象选择。</p>
+  </section>
+
+  <section id="pages">
+    <h2>页面、顺序与尺寸</h2>
+    <h3>页面预览侧栏</h3>
+    <p>点击顶部 <b>页面</b> 可打开侧栏：</p>
+    <ul>
+      <li>点击缩略图跳转页面。</li>
+      <li>拖拽缩略图调整页面顺序。</li>
+      <li>复选多个页面后批量删除。</li>
+      <li><span class="kbd">Shift</span> 可进行连续页选择。</li>
+    </ul>
+
+    <h3>新增页面</h3>
+    <p>使用顶部 <b>+ 页</b>，会在当前页后面增加新页。后来页面上的图片、文本框、图形会随原页面一起后移。</p>
+    <p>正文编辑中也可以使用 <span class="kbd">Ctrl/Cmd</span> + <span class="kbd">Enter</span> 进行显式分页。</p>
+
+    <h3>两种“缩放”不要混淆</h3>
+    <table>
+      <thead><tr><th>功能</th><th>作用</th><th>是否影响导出尺寸</th></tr></thead>
+      <tbody>
+        <tr><td>视图缩放</td><td>只是把纸张在屏幕上放大 / 缩小</td><td>否</td></tr>
+        <tr><td>页面物理尺寸</td><td>真正改变宽、高 mm，并保持比例</td><td>是</td></tr>
+      </tbody>
+    </table>
+    <p>你可以选择 A4 / 横向等预设，也可以直接输入宽高 mm，或者使用物理尺寸滑块按当前比例整体放大 / 缩小页面。</p>
+  </section>
+
+  <section id="shortcut">
+    <h2>快捷键速查</h2>
+    <table>
+      <thead><tr><th>功能</th><th>Windows / Linux</th><th>macOS</th></tr></thead>
+      <tbody>
+        <tr><td>粗体</td><td><span class="kbd">Ctrl+B</span></td><td><span class="kbd">⌘B</span></td></tr>
+        <tr><td>斜体</td><td><span class="kbd">Ctrl+I</span></td><td><span class="kbd">⌘I</span></td></tr>
+        <tr><td>下划线</td><td><span class="kbd">Ctrl+U</span></td><td><span class="kbd">⌘U</span></td></tr>
+        <tr><td>删除线</td><td><span class="kbd">Ctrl+Shift+X</span></td><td><span class="kbd">⌘Shift+X</span></td></tr>
+        <tr><td>行内代码</td><td><span class="kbd">Ctrl+`</span></td><td><span class="kbd">⌘+`</span></td></tr>
+        <tr><td>H1 / H2 / H3</td><td><span class="kbd">Ctrl+Alt+1/2/3</span></td><td><span class="kbd">⌘⌥1/2/3</span></td></tr>
+        <tr><td>撤回</td><td><span class="kbd">Ctrl+Z</span></td><td><span class="kbd">⌘Z</span></td></tr>
+        <tr><td>重做</td><td><span class="kbd">Ctrl+Shift+Z</span> / <span class="kbd">Ctrl+Y</span></td><td><span class="kbd">⌘Shift+Z</span></td></tr>
+        <tr><td>删除选中对象</td><td colspan="2"><span class="kbd">Delete</span> / <span class="kbd">Backspace</span></td></tr>
+        <tr><td>多选对象</td><td colspan="2"><span class="kbd">Shift</span> + 点击</td></tr>
+        <tr><td>退出绘图</td><td colspan="2"><span class="kbd">Esc</span></td></tr>
+      </tbody>
+    </table>
+    <p class="muted">另外，插件会注册一部分 Obsidian Commands；你可以在 设置 → 快捷键 中重新绑定。</p>
+  </section>
+
+  <section id="export">
+    <h2>导出</h2>
+    <p>顶部右侧提供常见导出入口：</p>
+    <div class="grid">
+      <div class="card">
+        <h3>PDF</h3>
+        <p>普通正文尽量保持可选择、可复制的 PDF 文字；图片按原位置嵌入；公式重视视觉保真。</p>
+      </div>
+      <div class="card">
+        <h3>PPTX</h3>
+        <p>正文、图片、文本框、箭头、方框尽量保持独立对象；表格使用 PowerPoint 原生表格；常见公式尝试 Office Math。</p>
+      </div>
+      <div class="card">
+        <h3>DOCX</h3>
+        <p>适合生成流式 Word 文档。表格是 Word 原生表格；常见公式尽量转换为 OMML 原生公式。</p>
+      </div>
+      <div class="card">
+        <h3>MD</h3>
+        <p>导出 Markdown 文本副本，适合长期保存、版本管理、迁移与复用。</p>
+      </div>
+    </div>
+
+    <div class="callout warn"><b>导出建议：</b>如果某个复杂公式在 PDF 中视觉效果不理想，而 PPTX 中效果很好，可以先导出 PPTX，再由 PowerPoint / WPS 导出 PDF。这是很实用的备用流程。</div>
+  </section>
+
+  <section id="workflow">
+    <h2>推荐的实际笔记工作流</h2>
+    <div class="steps">
+      <div class="step"><b>先写内容</b>快速输入标题、公式、正文、列表，不要一开始就追求每个元素的位置完美。</div>
+      <div class="step"><b>再分页</b>把一大段内容切成适合阅读、复习或展示的页面。</div>
+      <div class="step"><b>再加视觉解释</b>插入图片、文本框、箭头、方框，用空间位置表达“这张图解释这段话”。</div>
+      <div class="step"><b>最后导出</b>课程笔记留在 Obsidian；交作业可 DOCX/PDF；演示可 PPTX。</div>
+    </div>
+    <div class="callout ok">这样做的好处是：原始 Markdown 始终留在知识库里，排版只是它的一层表现。以后要重写、搜索、复用内容，不需要从截图或 PPT 里反向抄回来。</div>
+  </section>
+
+  <section id="trouble">
+    <h2>常见问题与排查</h2>
+
+    <h3>插件提示“加载失败”</h3>
+    <ul>
+      <li>检查最终路径是不是 <code>.obsidian/plugins/markdown-word/main.js</code>。</li>
+      <li>确认 <code>manifest.json</code>、<code>styles.css</code> 与 <code>main.js</code> 在同一级目录。</li>
+      <li>完全退出 Obsidian 再打开。</li>
+      <li>不要把 ZIP 本身直接放进 plugins 文件夹。</li>
+    </ul>
+
+    <h3>更新了但感觉还是旧版</h3>
+    <ul>
+      <li>关闭 Obsidian。</li>
+      <li>把旧 <code>markdown-word</code> 目录整个删除。</li>
+      <li>重新复制新版目录。</li>
+      <li>打开插件设置确认版本号。</li>
+    </ul>
+
+    <h3>图片 / 文本框移动后插页错位</h3>
+    <p>新版已经针对“前面插入页面后浮动对象没有跟着原页面后移”做了处理。如果仍出现，优先确认是否真的运行的是最新版。</p>
+
+    <h3>公式导出和页面显示略有差异</h3>
+    <p>页面内公式由 Obsidian / MathJax 渲染；Office 使用自己的公式系统。常见公式可以转换，复杂宏的字体度量与排版仍可能不同。需要绝对视觉一致时，PPTX 的 fallback 或 PPTX → PDF 往往最稳。</p>
+
+    <h3>快捷键被其他插件抢走</h3>
+    <p>打开 Obsidian 设置 → 快捷键，搜索 Markdown Word 相关命令，检查是否与其他插件冲突。</p>
+  </section>
+
+  <section id="backup">
+    <h2>备份与安全建议</h2>
+    <ul class="checklist">
+      <li>定期备份整个 Vault，而不仅是插件文件夹。</li>
+      <li>大改笔记前可以复制一份 <code>.md</code> 作为快照。</li>
+      <li>布局信息与 Markdown 正文是不同层次的数据，两者都建议随 Vault 一起备份。</li>
+      <li>插件升级前保留旧 ZIP，遇到兼容问题可以快速回退。</li>
+      <li>重要作业 / 报告导出后，用目标软件实际打开一次确认公式、表格和图片。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>一句话记住它怎么用</h2>
+    <div class="callout ok" style="font-size:18px">
+      <b>Markdown 负责内容，页面负责空间，图层负责解释，导出负责交付。</b>
+    </div>
+  </section>
+
+  <footer>
+    Markdown Word 实用指南 · Su &amp; ChatGPT
+  </footer>
+</main>
+</div>
+
+</body>
+</html>

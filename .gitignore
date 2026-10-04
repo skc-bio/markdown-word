@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Temporary exports
+*.tmp
+*.log
+
+# Local test notes / layouts
+*.layout.json
+*.export.pdf
+*.export.pptx
+*.export.docx

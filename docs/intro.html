@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Markdown Word — 在页面上写 Markdown</title>
+<style>
+:root{
+  --bg:#f6f7fb;
+  --paper:#ffffff;
+  --text:#1f2937;
+  --muted:#667085;
+  --line:#e7eaf0;
+  --accent:#315efb;
+  --accent-soft:#eef2ff;
+  --green:#0f9d72;
+  --shadow:0 18px 50px rgba(31,41,55,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(49,94,251,.08), transparent 28%),
+    linear-gradient(180deg,#fbfcff 0%,var(--bg) 100%);
+  line-height:1.75;
+}
+a{color:inherit}
+.wrap{width:min(1120px,92vw);margin:auto}
+.hero{
+  padding:88px 0 54px;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:56px;
+  align-items:center;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border:1px solid #d9e1ff;
+  background:var(--accent-soft);
+  border-radius:999px;
+  color:var(--accent);
+  font-size:14px;
+  font-weight:700;
+}
+h1{
+  margin:20px 0 18px;
+  font-size:clamp(42px,6vw,76px);
+  line-height:1.06;
+  letter-spacing:-.045em;
+}
+.lead{
+  font-size:20px;
+  color:var(--muted);
+  max-width:720px;
+}
+.hero-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.toolbar{
+  height:44px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 14px;
+  color:#5d6678;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.toolbar span{
+  padding:3px 7px;
+  border-radius:6px;
+}
+.toolbar .active{background:#eef2ff;color:var(--accent)}
+.page{
+  width:82%;
+  aspect-ratio:210/297;
+  margin:30px auto 34px;
+  background:white;
+  border:1px solid #eceff4;
+  box-shadow:0 10px 26px rgba(31,41,55,.09);
+  padding:9% 10%;
+  font-family:Georgia,"Times New Roman","Songti SC",serif;
+}
+.page h3{font-family:inherit;font-size:24px;margin:0 0 16px}
+.page p{margin:8px 0}
+.math{
+  margin:20px 0;
+  text-align:center;
+  font-size:24px;
+  font-style:italic;
+}
+.callout{
+  border-left:3px solid var(--accent);
+  padding:8px 12px;
+  background:#f7f9ff;
+  color:#475467;
+}
+section{padding:66px 0}
+.section-head{
+  max-width:760px;
+  margin-bottom:30px;
+}
+.section-head h2{
+  margin:0 0 10px;
+  font-size:36px;
+  letter-spacing:-.025em;
+}
+.section-head p{margin:0;color:var(--muted);font-size:18px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.card{
+  background:rgba(255,255,255,.86);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 8px 28px rgba(31,41,55,.04);
+}
+.card h3{margin:8px 0 8px;font-size:20px}
+.card p{margin:0;color:var(--muted)}
+.icon{
+  width:38px;height:38px;border-radius:10px;
+  display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent);
+  font-weight:800;
+}
+.compare{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+table{width:100%;border-collapse:collapse}
+th,td{padding:18px 20px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f8f9fc;text-align:left;font-size:14px;color:#475467}
+tr:last-child td{border-bottom:none}
+.good{color:var(--green);font-weight:700}
+.bad{color:#9aa2b1}
+.flow{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.step{
+  position:relative;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:white;
+}
+.step b{display:block;margin-bottom:6px}
+.step small{color:var(--muted)}
+.step:after{
+  content:"→";
+  position:absolute;
+  right:-12px;top:50%;
+  transform:translateY(-50%);
+  color:#aab2c0;
+  font-size:22px;
+}
+.step:last-child:after{display:none}
+.quote{
+  padding:36px;
+  border-radius:22px;
+  background:#111827;
+  color:white;
+  font-size:24px;
+  line-height:1.55;
+}
+.quote span{display:block;color:#aab4c5;font-size:15px;margin-top:16px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tag{
+  padding:6px 10px;border:1px solid #dfe4ee;border-radius:999px;
+  background:white;color:#596273;font-size:14px
+}
+footer{
+  padding:34px 0 52px;
+  color:#7b8494;
+  font-size:14px;
+  border-top:1px solid var(--line);
+}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;padding-top:54px}
+  .grid{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr 1fr}
+  .step:nth-child(2):after{display:none}
+}
+@media(max-width:560px){
+  .flow{grid-template-columns:1fr}
+  .step:after{display:none}
+  th,td{padding:13px 12px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Markdown Word · Obsidian 插件</div>
+      <h1>在“页面”上写 Markdown。</h1>
+      <p class="lead">
+        Markdown Word 想解决一个很具体的问题：Markdown 很适合快速记录和结构化知识，
+        Word / PPT 很适合页面排版和图文布局，但二者长期分属于两套工作流。
+        这个插件试着把它们合在一起——让你继续用 Markdown 思考，同时在真正的纸张页面上完成笔记。
+      </p>
+      <div class="tags">
+        <span class="tag">Markdown</span>
+        <span class="tag">公式</span>
+        <span class="tag">分页</span>
+        <span class="tag">自由图片</span>
+        <span class="tag">文本框</span>
+        <span class="tag">图形 / 箭头</span>
+        <span class="tag">PPTX / DOCX / PDF / MD</span>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="toolbar">
+        <span>↶</span><span>↷</span><span class="active">B</span><span>I</span><span>S</span>
+        <span>H1</span><span>H2</span><span>∑</span><span>表格</span><span>图片</span><span>文本框</span>
+      </div>
+      <div class="page">
+        <h3>动量与冲量</h3>
+        <p>若系统受到合外力，则有：</p>
+        <div class="math">J = ∫ F dt = Δp</div>
+        <p class="callout">这里可以继续放图片、箭头、文本框，并保持它们在页面上的实际位置。</p>
+        <p>正文仍然来自 Markdown，因此结构清晰，也方便后续检索与重用。</p>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <h2>它和传统笔记的差别，不只是“多一个 Markdown 编辑器”</h2>
+      <p>核心变化是：内容结构与视觉布局同时存在。你不必先写完，再去另一个软件排版。</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">01</div>
+        <h3>Markdown 负责“想法”</h3>
+        <p>标题、列表、公式、表格、强调等内容仍用 Markdown 表达。输入快、结构稳定，也更适合长期积累。</p>
+      </div>
+      <div class="card">
+        <div class="icon">02</div>
+        <h3>页面负责“空间”</h3>
+        <p>笔记不再是一条无限向下的文本流。页面有真实尺寸，可以按 A4 或自定义比例组织内容。</p>
+      </div>
+      <div class="card">
+        <div class="icon">03</div>
+        <h3>图层负责“解释”</h3>
+        <p>图片、文本框、方框、箭头可以作为独立对象拖动、叠放、多选和调整，更适合理工科图文混排。</p>
+      </div>
+      <div class="card">
+        <div class="icon">04</div>
+        <h3>公式属于笔记本身</h3>
+        <p>LaTeX 公式直接写进 Markdown，不需要截图公式再贴回来；导出 Office 时还可以尽量转换为原生公式。</p>
+      </div>
+      <div class="card">
+        <div class="icon">05</div>
+        <h3>一次记录，多种输出</h3>
+        <p>同一份笔记可以继续保留为 Markdown，也能导出 PPTX、DOCX、PDF，减少“重新做一遍”的工作。</p>
+      </div>
+      <div class="card">
+        <div class="icon">06</div>
+        <h3>仍然属于 Obsidian</h3>
+        <p>文件继续留在 Vault 中，而不是被锁进新的专有格式。原始 Markdown 仍是知识库的一部分。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>与传统笔记工具相比</h2>
+      <p>它并不试图彻底替代 Word、PPT 或纸笔，而是把各自最适合做笔记的部分放到一条工作流里。</p>
+    </div>
+
+    <div class="compare">
+      <table>
+        <thead>
+          <tr>
+            <th>需求</th>
+            <th>传统 Markdown</th>
+            <th>Word / PPT</th>
+            <th>纸质笔记</th>
+            <th>Markdown Word</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>快速输入结构</td>
+            <td class="good">很强</td>
+            <td>中等</td>
+            <td>中等</td>
+            <td class="good">Markdown 直接输入</td>
+          </tr>
+          <tr>
+            <td>公式</td>
+            <td class="good">LaTeX 很方便</td>
+            <td>可用，但录入较慢</td>
+            <td>手写最快</td>
+            <td class="good">LaTeX + 页面排版</td>
+          </tr>
+          <tr>
+            <td>图片自由移动 / 叠加</td>
+            <td class="bad">通常较弱</td>
+            <td class="good">很强</td>
+            <td class="good">天然自由</td>
+            <td class="good">独立图层</td>
+          </tr>
+          <tr>
+            <td>固定分页</td>
+            <td class="bad">通常没有</td>
+            <td class="good">成熟</td>
+            <td class="good">天然分页</td>
+            <td class="good">真实页面尺寸</td>
+          </tr>
+          <tr>
+            <td>检索 / 复用 / 链接</td>
+            <td class="good">很强</td>
+            <td>一般</td>
+            <td class="bad">弱</td>
+            <td class="good">保留 Markdown / Obsidian</td>
+          </tr>
+          <tr>
+            <td>导出成展示材料</td>
+            <td>通常要二次处理</td>
+            <td class="good">很强</td>
+            <td class="bad">需扫描</td>
+            <td class="good">PPTX / DOCX / PDF / MD</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>更适合这种笔记流程</h2>
+      <p>尤其适合“内容密度高、公式多、图片多、最后还要交作业 / 做展示”的场景。</p>
+    </div>
+
+    <div class="flow">
+      <div class="step">
+        <b>1. 先记</b>
+        <small>用 Markdown 快速记录定义、公式、推导与结论。</small>
+      </div>
+      <div class="step">
+        <b>2. 再摆</b>
+        <small>把图、文本框、箭头拖到最适合解释内容的位置。</small>
+      </div>
+      <div class="step">
+        <b>3. 再整理</b>
+        <small>分页、调整页面尺寸、重排对象、补充注释。</small>
+      </div>
+      <div class="step">
+        <b>4. 直接输出</b>
+        <small>继续留在 Obsidian，或导出成 PPTX / DOCX / PDF。</small>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="quote">
+      “它更像一个以 Markdown 为底层语言、以 Word/PPT 为视觉界面的笔记本。”
+      <span>Markdown Word 的目标不是让 Markdown 变复杂，而是让排版不再打断思考。</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>它真正想解决的，是工具切换</h2>
+      <p>
+        很多人的实际流程是：Obsidian 写内容 → 截公式 → Word 整理 → PPT 再排一次 → PDF 再导一次。
+        每切一次工具，就会重复复制、粘贴、改格式、调图片位置。
+      </p>
+    </div>
+    <div class="card">
+      <p>
+        Markdown Word 希望把这条流程压缩成一个文档：<strong>输入时像 Markdown，阅读时像排版文档，
+        调图时像 PPT，最终仍然能回到 Markdown。</strong>
+        对于长期做学习笔记、课程笔记、研究笔记和技术文档的人，这种“同一份内容，多种形态”的工作方式，
+        往往比单纯追求某一种编辑器更重要。
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    Markdown Word · Obsidian Plugin · Su &amp; ChatGPT
+  </footer>
+</div>
+
+</body>
+</html>
