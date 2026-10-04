@@ -115,7 +115,7 @@ $$
 1. 填写显示名、评分、类型和留言
 2. 页面打开一个预填好的 GitHub Issue 草稿
 3. 用户自己登录 GitHub 并确认发布
-4. GitHub Actions 汇总仍然打开的 `community` Issues
+4. GitHub Actions 识别带有 Markdown Word 社区标记、且仍然打开的 Issues
 5. 自动生成 `docs/community.json`
 6. GitHub Pages 读取该快照显示最近留言
 7. 关闭 Issue 后，留言会在下一次工作流运行后撤回
@@ -135,11 +135,18 @@ $$
 - 导出后用目标软件实际打开检查
 - 更新插件前保留旧版本 ZIP
 
+## 🔧 源码
+
+仓库根目录中的 `main.js`、`manifest.json`、`styles.css` 是当前发布版插件的可运行代码/清单/样式。  
+安装包请从 [Releases](https://github.com/skc-bio/markdown-word/releases) 下载。
+
 ## 📄 License
 
-发布前请自行选择许可证。  
-如果你希望别人可以自由使用、修改和分发，常见选择是 MIT License；如果暂时不想开放源码权限，也可以先不添加许可证。
+本项目采用 [MIT License](LICENSE)。
+
+你可以使用、复制、修改、分发和再发布本项目，但需要保留原版权声明与 MIT 许可文本。软件按“原样”提供，不附带担保。
 
 ---
 
-Made by **Su & ChatGPT**
+Project credit: **Su & ChatGPT**  
+Copyright © 2026 **Su (skc-bio)**

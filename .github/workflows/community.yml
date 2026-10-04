@@ -2,7 +2,7 @@ name: Update community comments
 
 on:
   issues:
-    types: [opened, edited, reopened, closed, labeled, unlabeled]
+    types: [opened, edited, reopened, closed]
   workflow_dispatch:
 
 permissions:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build community.json from open issues
+      - name: Build community snapshot
         uses: actions/github-script@v7
         with:
           script: |
@@ -26,26 +26,26 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: "open",
-              labels: "community",
               per_page: 100
             });
 
             function parse(issue) {
+              if (issue.pull_request) return null;
               const body = issue.body || "";
               if (!body.includes("<!-- markdown-word-community -->")) return null;
 
-              const name = (body.match(/^- 显示名:\s*(.+)$/m) || [,"匿名用户"])[1].trim();
-              const rating = Number((body.match(/^- 评分:\s*([1-5])$/m) || [,5])[1]);
-              const type = (body.match(/^- 类型:\s*(.+)$/m) || [,"留言"])[1].trim();
+              const name = (body.match(/^- 显示名:\s*(.+)$/m) || [, "匿名用户"])[1].trim();
+              const rating = Number((body.match(/^- 评分:\s*([1-5])$/m) || [, 5])[1]);
+              const type = (body.match(/^- 类型:\s*(.+)$/m) || [, "留言"])[1].trim();
               const messageMatch = body.match(/### 留言\s*\n([\s\S]*?)(?:\n---|\s*$)/);
               const message = (messageMatch ? messageMatch[1] : "").trim();
 
               return {
                 issue: issue.number,
-                name,
+                name: name.slice(0, 80),
                 rating,
-                type,
-                message,
+                type: type.slice(0, 80),
+                message: message.slice(0, 4000),
                 url: issue.html_url,
                 github_user: issue.user?.login || "",
                 created_at: issue.created_at,
@@ -54,12 +54,14 @@ jobs:
             }
 
             const items = issues
-              .filter(i => !i.pull_request)
               .map(parse)
               .filter(Boolean)
-              .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+              .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
-            fs.writeFileSync("docs/community.json", JSON.stringify(items, null, 2) + "\n");
+            fs.writeFileSync(
+              "docs/community.json",
+              JSON.stringify(items, null, 2) + "\n"
+            );
 
       - name: Commit snapshot
         run: |

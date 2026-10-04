@@ -83,7 +83,7 @@ footer{padding:34px 0 50px;color:#7b8494;font-size:13px;border-top:1px solid var
       <div class="field full"><label for="type">类型</label><select id="type"><option>使用体验</option><option>Bug 反馈</option><option>功能建议</option><option>其他</option></select></div>
       <div class="field full"><label for="message">留言</label><textarea id="message" maxlength="2000" placeholder="说说你的使用体验、问题或想法……"></textarea><div class="hint">点击提交后会跳到 GitHub。你需要登录 GitHub，并自行点击“Submit new issue”。</div></div>
     </div>
-    <div class="actions"><button class="btn primary" id="submitFeedback">生成 GitHub Issue 草稿</button><a class="btn" href="https://github.com/skc-bio/markdown-word/issues?q=is%3Aissue+label%3Acommunity">查看全部留言</a></div>
+    <div class="actions"><button class="btn primary" id="submitFeedback">生成 GitHub Issue 草稿</button><a class="btn" href="https://github.com/skc-bio/markdown-word/issues?q=is%3Aissue+is%3Aopen+%5BCommunity%5D+in%3Atitle">查看全部留言</a></div>
 
     <h3 style="margin-top:34px">最近留言</h3>
     <div class="notice">这里只读取仓库自动生成的 <code>community.json</code>。关闭对应 Issue 后，该留言会在下一次工作流运行后从公开列表消失。</div>
@@ -117,7 +117,7 @@ ${message}
 
 ---
 由 Markdown Word 项目页生成。`;
-  const url = `https://github.com/${REPO}/issues/new?labels=community&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  const url = `https://github.com/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
   window.open(url, "_blank", "noopener");
 });
 

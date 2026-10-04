@@ -1,0 +1,9 @@
+{
+  "id": "markdown-word",
+  "name": "Markdown Word",
+  "version": "0.9.3",
+  "minAppVersion": "1.8.0",
+  "description": "Paged Markdown editor with multi-object layout editing, vector-text PDF export, native Office math/table export, stable page anchors, and Word-like editing.",
+  "author": "Su & ChatGPT",
+  "isDesktopOnly": true
+}
