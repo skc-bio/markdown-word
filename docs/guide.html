@@ -263,7 +263,7 @@ $$</pre>
     <p>常见 LaTeX 写法都可以继续使用，例如 <code>\frac</code>、<code>\sqrt</code>、上下标、希腊字母、求和、积分、矩阵等。</p>
 
     <div class="callout ok"><b>Office 导出：</b>常见公式会尽量转换成 Word / PowerPoint 的原生 Office Math（OMML），因此在支持的 Office 中可以继续编辑。非常复杂或不支持的 LaTeX 会使用高质量 fallback，避免整份文件导出失败。</div>
-    <div class="callout warn"><b>PDF：</b>普通文字保持可选择、可复制；公式目前更重视视觉保真，因此公式自身可能以高分辨率渲染形式嵌入。</div>
+    <div class="callout ok"><b>PDF（0.9.31）：</b>推荐的“可复制矢量 PDF”会保留正文文字层，并在导出前物化 MathJax 字形，解决部分数学变量（如 n、x、i、n²）在 PDF 中消失的问题。页面尺寸直接使用插件设置的 mm 宽高。</div>
   </section>
 
   <section id="table">
@@ -396,6 +396,10 @@ $$</pre>
         <p>适合生成流式 Word 文档。表格是 Word 原生表格；常见公式尽量转换为 OMML 原生公式。</p>
       </div>
       <div class="card">
+        <h3>HTML</h3>
+        <p>导出一个独立的分页放映网页。方向键 / Space / PageUp / PageDown 翻页，F 全屏，并会根据浏览器窗口自动缩放页面。适合课堂、组会和快速分享。</p>
+      </div>
+      <div class="card">
         <h3>MD</h3>
         <p>导出 Markdown 文本副本，适合长期保存、版本管理、迁移与复用。</p>
       </div>
@@ -410,7 +414,7 @@ $$</pre>
       <div class="step"><b>先写内容</b>快速输入标题、公式、正文、列表，不要一开始就追求每个元素的位置完美。</div>
       <div class="step"><b>再分页</b>把一大段内容切成适合阅读、复习或展示的页面。</div>
       <div class="step"><b>再加视觉解释</b>插入图片、文本框、箭头、方框，用空间位置表达“这张图解释这段话”。</div>
-      <div class="step"><b>最后导出</b>课程笔记留在 Obsidian；交作业可 DOCX/PDF；演示可 PPTX。</div>
+      <div class="step"><b>最后导出</b>课程笔记留在 Obsidian；交作业可 DOCX/PDF；演示可直接用 HTML，也可以导出 PPTX 继续编辑。</div>
     </div>
     <div class="callout ok">这样做的好处是：原始 Markdown 始终留在知识库里，排版只是它的一层表现。以后要重写、搜索、复用内容，不需要从截图或 PPT 里反向抄回来。</div>
   </section>
