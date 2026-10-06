@@ -1,0 +1,9 @@
+{
+  "id": "markdown-word",
+  "name": "Markdown Word",
+  "version": "0.9.31",
+  "minAppVersion": "1.8.0",
+  "description": "Paged Markdown editor with editable floating objects, presentation HTML, selectable vector PDF with materialized MathJax glyphs and exact page sizing, browser-print fallback, and high-resolution image PDF export.",
+  "author": "Su & ChatGPT",
+  "isDesktopOnly": true
+}
